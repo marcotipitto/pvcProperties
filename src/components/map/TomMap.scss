@@ -1,0 +1,14 @@
+@import "@tomtom-international/web-sdk-maps";
+
+#pvc-map {
+    height: 360px;
+}
+
+.pvc-marker {
+    width: 120px;
+    height: 120px;
+    background-color: red;
+    border-radius: 50%;
+    opacity: 0.3;
+    margin-top: 60px;
+}
