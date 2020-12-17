@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import RentalDetail from './pages/RentalDetail';
 import SecretPage from './pages/SecretPage';
+import RentalNew from './pages/RentalNew'
 
 const Routes = () => {
     return (
@@ -18,6 +19,9 @@ const Routes = () => {
                 <Route exact path='/'>
                     <RentalHome />
                 </Route>
+                <AuthRoute path='/rentals/new'>
+                    <RentalNew />
+                </AuthRoute>
                 <Route path='/rentals/:id'>
                     <RentalDetail />
                 </Route>

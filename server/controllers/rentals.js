@@ -21,11 +21,13 @@ exports.getRentalById = (req, res) => {
 
 exports.createRental = (req, res) => {
     const rentalData = req.body;
+    rentalData.owner = res.locals.users;
+
     Rental.create(rentalData, (error, data) => {
         if (error) {
             return res.mongoError(error);
-        } 
-        return res.json({message: `Rental with id: ${data._id} was added.`})
+        }
+        return res.json(data)
     })
 }
 
@@ -48,3 +50,23 @@ exports.createRental = (req, res) => {
 
 //     return res.json({message: `Rental with id: ${id} was removed.`})
 // }
+
+// Middlewares
+
+exports.isUserRentalOwner = (req, res, next) => {
+    const { rental } = req.body;
+    const user = res.locals.user;
+
+    Rental
+        .findById(rental)
+        .populate('owner')
+        .exec((error, foundRental) => {
+            if (error) {
+                return res.mongoError(error);
+            };
+            if (foundRental.owner === user.id) {
+                return res.apiError({ title: 'Invalid User', detail: 'Owner cannot book own property' })
+            }
+            next();
+        });
+};

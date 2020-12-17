@@ -14,7 +14,7 @@ exports.register = (req, res) => {
     }
 
     if (password !== confirmPassword) {
-        return res.apiError({title: 'Invalid Password', detail: 'Passwords to not match'})
+        return res.apiError({title: 'Invalid Password', detail: 'Passwords to not match'});
     }
 
     User.findOne({email}, (error, existingUser) => {
@@ -53,11 +53,11 @@ exports.login = (req, res) => {
             const token = jwt.sign({
                 sub: foundUser.id,
                 username: foundUser.username,
-            }, config.JWT_SECRET, { expiresIn: '2h' })
+            }, config.JWT_SECRET, { expiresIn: '2h' });
 
             return res.json(token)
         } else {
-            return res.apiError({title: 'Invalid Password', detail: 'Provided password is incorrect'})
+            return res.apiError({title: 'Invalid Password', detail: 'Provided password is incorrect'});
         }
     })
 }
