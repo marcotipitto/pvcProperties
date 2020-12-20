@@ -8,6 +8,8 @@ import { AuthProvider, useAuth } from 'providers/AuthProvider';
 import { MapProvider } from 'providers/MapProvider';
 import { initStore } from './store';
 
+import { ToastContainer } from 'react-toastify';
+
 const store = initStore();
 
 const Providers = ({ children }) => 
@@ -37,6 +39,7 @@ const PvcApp = () => {
 const App = () => {
   return (
     <Providers>
+      <ToastContainer />
       <PvcApp />
     </Providers>
   );

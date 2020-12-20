@@ -3,14 +3,17 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
+
 import AuthRoute from './components/auth/AuthRoute';
 import GuestRoute from './components/auth/GuestRoute';
+
 import RentalHome from './pages/RentalHome';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import RentalDetail from './pages/RentalDetail';
 import SecretPage from './pages/SecretPage';
 import RentalNew from './pages/RentalNew'
+import RentalHomeSearch from 'pages/RentalHomeSearch';
 
 const Routes = () => {
     return (
@@ -18,6 +21,9 @@ const Routes = () => {
             <Switch>
                 <Route exact path='/'>
                     <RentalHome />
+                </Route>
+                <Route exact path='/rentals/:location/homes'>
+                    <RentalHomeSearch />
                 </Route>
                 <AuthRoute path='/rentals/new'>
                     <RentalNew />

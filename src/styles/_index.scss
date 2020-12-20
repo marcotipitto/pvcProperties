@@ -3,6 +3,7 @@
 @import './rental-home';
 @import './rental-detail';
 @import './forms';
+@import './bookingReserve';
 
 html, body {
     height: 100%;
@@ -39,6 +40,10 @@ html, body {
             border-color: $main-blue-color;
             color: white;
             box-shadow: none;
+        }
+
+        &:disabled {
+            cursor: no-drop 
         }
     }
 }

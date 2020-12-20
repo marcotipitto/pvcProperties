@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchRentalById } from 'actions';
 import RentalInfo from 'components/rental/RentalInfo';
 import TomMap from 'components/map/TomMap';
+import BookingReserve from 'components/booking/BookingReserve';
 
 class RentalDetail extends React.Component {
 
@@ -22,8 +23,8 @@ class RentalDetail extends React.Component {
     }
 
     render() {
-        const { rental, isFetching } = this.props;
-        if (isFetching) { return null };
+        const { rental, isFetching, isAuth } = this.props;
+        if (isFetching || !rental._id) { return null };
         return (
             <section id="rentalDetails">
                 <div className="upper-section">
@@ -42,7 +43,9 @@ class RentalDetail extends React.Component {
                         <div className="col-md-8">
                             <RentalInfo rental={rental}/>
                         </div>
-                        <div className="col-md-4"> BOOKING</div>
+                        <div className="col-md-4">
+                            <BookingReserve rental={rental} isAuth={isAuth}/>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -50,7 +53,7 @@ class RentalDetail extends React.Component {
     }
 }
 
-const mapStateToProps = ({ rental }) => ({ rental: rental.item, isFetching: rental.isFetching })
+const mapStateToProps = ({ rental, auth: { isAuth } }) => ({ rental: rental.item, isFetching: rental.isFetching, isAuth: isAuth })
 
 const RentalDetailWithRouter = withRouter(RentalDetail)
 

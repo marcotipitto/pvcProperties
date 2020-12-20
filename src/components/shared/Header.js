@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import RentalSearchInput from 'components/rental/RentalSearchInput';
 
 const Header = ({username, isAuth, signOut}) => {
     return (
@@ -13,10 +14,7 @@ const Header = ({username, isAuth, signOut}) => {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <form className="form-inline my-2 my-lg-0">
-                    <input className="form-control mr-sm-2 pvc-search" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-success my-2 my-sm-0 btn-pvc-main" type="submit">Search</button>
-                </form>
+                <RentalSearchInput />
                 <ul className="navbar-nav ml-auto">
                     {isAuth && 
                         <li className="nav-item active">
