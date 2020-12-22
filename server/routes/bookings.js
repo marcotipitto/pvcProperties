@@ -11,7 +11,7 @@ const { isUserRentalOwner } = require('../controllers/rentals');
 
 // /api/v1/bookings?rental="8772392sad79das8d"
 router.get('', getBookings);
-router.get('/received', onlyAuthUser, getReceivedBookings);
+router.get('/recieved', onlyAuthUser, getReceivedBookings);
 router.get('/me', onlyAuthUser, getUserBookings);
 router.post('', onlyAuthUser, isUserRentalOwner, createBooking);
 

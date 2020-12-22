@@ -5,14 +5,14 @@ const { pvcAxios } = axiosService;
 export const registerUser = registerData => {
     return pvcAxios
         .post(`/users/register`, registerData)
-        .catch(error => Promise.reject(extractApiErrors(error.response || {})));
+        .catch(error => Promise.reject(extractApiErrors(error.response || [])));
 }
 
 export const loginUser = loginData => {
     return pvcAxios
         .post(`/users/login`, loginData)
         .then(res => res.data)
-        .catch(error => Promise.reject(extractApiErrors(error.response || {})));
+        .catch(error => Promise.reject(extractApiErrors(error.response || [])));
 }
 
 export const userAuthenticated = decodedToken => {
