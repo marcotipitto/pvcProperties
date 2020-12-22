@@ -5,15 +5,31 @@ import axios from 'axios';
 const { createContext, useContext } = React;
 const MapContext = createContext(null);
 
-export const MapProvider = ({children, apiKey}) => {
+export const MapProvider = ({ children, apiKey }) => {
 
     const cache = useRef({});
 
-    const normalizeLocation = (location) => location.replace(/\s/g,'').toLowerCase();
+    const removeMarkers = () => {
+        removeElementsByClass('pvc-marker');
+    }
+
+    const removePopups = () => {
+        removeElementsByClass('pvc-popup');
+    }
+
+    const removeElementsByClass = className => {
+        const elements = document.getElementsByClassName(className);
+        while (elements.length > 0) {
+            const element = elements[0];
+            element.parentNode.removeChild(element);
+        }
+    }
+
+    const normalizeLocation = (location) => location.replace(/\s/g, '').toLowerCase();
 
     const cacheLocation = (location, position) => {
-        const key = normalizeLocation(location);
-        return cache.current[location] = position;
+        const locationKey = normalizeLocation(location);
+        return cache.current[locationKey] = position;
     }
 
     const getCacheLocation = (location) => {
@@ -39,16 +55,18 @@ export const MapProvider = ({children, apiKey}) => {
     }
 
     const addMarker = (map, position) => {
+        removeMarkers();
         const markerDiv = document.createElement('div');
         markerDiv.className = 'pvc-marker';
-        new tt.Marker({element: markerDiv})
+        new tt.Marker({ element: markerDiv })
             .setLngLat([position.lon, position.lat])
             .addTo(map)
     }
 
     const addPopupMessage = (map, message) => {
-        new tt.Popup({className: 'pvc-popup', closeButton: false, closeOnClick: false})
-            .setLngLat(new tt.LngLat(0,0))
+        removePopups();
+        new tt.Popup({ className: 'pvc-popup', closeButton: false, closeOnClick: false })
+            .setLngLat(new tt.LngLat(0, 0))
             .setHTML(`<p>${message}</p>`)
             .addTo(map);
     }
@@ -95,4 +113,3 @@ export const useMap = () => {
     return useContext(MapContext);
 }
 
-    

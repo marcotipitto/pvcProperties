@@ -2,6 +2,10 @@ import axiosService from 'services/AxiosService';
 import { extractApiErrors } from './index';
 const { pvcAxios } = axiosService;
 
+export const verifyRentalOwner = (rentalId) => {
+    return pvcAxios.get(`/rentals/${rentalId}/verify-user`);
+}
+
 export const fetchRentals = (location) => dispatch => {
     dispatch({ type: 'REQUEST_DATA', resource: 'rentals' });
     const query = location ? `/rentals?city=${location}` : '/rentals';
@@ -40,6 +44,18 @@ export const fetchRentalById = rentalId => async dispatch => {
 
 export const createRental = rental => {
     return pvcAxios.post('/rentals', rental);
+}
+
+export const updateRental = (id, rentalData) => dispatch => {
+    return pvcAxios.patch(`/rentals/${id}`, rentalData)
+        .then(res => res.data)
+        .then(updatedRental =>
+            dispatch({
+                type: 'UPDATE_RENTAL_SUCCESS',
+                rental: updatedRental
+            })
+        )
+        .catch(error => Promise.reject(extractApiErrors(error.response || [])));
 }
 
 export const deleteRental = rentalId => dispatch => {
