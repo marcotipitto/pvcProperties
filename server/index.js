@@ -7,7 +7,8 @@ const { provideMongoErrorHandler } = require('./middlewares');
 // Routes
 const rentalRoutes = require('./routes/rentals');
 const usersRoutes = require('./routes/users');
-const bookingRoutes = require('./routes/bookings')
+const bookingRoutes = require('./routes/bookings');
+const imageRoutes = require('./routes/image-upload');
 
 const { onlyAuthUser } = require('./controllers/users');
 
@@ -15,6 +16,7 @@ const { onlyAuthUser } = require('./controllers/users');
 require('./models/rental');
 require('./models/user');
 require('./models/booking');
+require('./models/cloudinary-image');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -40,6 +42,7 @@ app.get('/api/v1/secret', onlyAuthUser, (req, res) => {
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/image-upload', imageRoutes);
 
 app.listen(PORT, () => {
     console.log('Server is listening on port: ', PORT);

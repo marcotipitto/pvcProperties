@@ -18,7 +18,9 @@ class RentalNew extends React.Component {
     render() {
         const { shouldRedirect } = this.state;
         if (shouldRedirect) {
-            <Redirect to={{pathname: '/'}} />
+            return (
+                <Redirect to={{pathname: '/'}} />
+            )
         }
         return (
             <section id="newRental">

@@ -42,6 +42,14 @@ export const fetchRentalById = rentalId => async dispatch => {
     });
 }
 
+export const uploadImage = image => {
+    const formData = new FormData();
+    formData.append('image', image);
+
+    return pvcAxios.post('/image-upload', formData)
+        .then(res => res.data)
+}
+
 export const createRental = rental => {
     return pvcAxios.post('/rentals', rental);
 }

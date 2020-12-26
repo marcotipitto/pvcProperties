@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import FileLoader from 'components/file-upload/FileLoader';
 
 const rentalOptions = ['apartment', 'condo', 'house'];
 
 const NewRentalForm = ({onSubmit}) => {
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, setValue } = useForm();
+
+    useEffect(() => {
+        register({name: 'image'});
+    }, [register]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,13 +58,10 @@ const NewRentalForm = ({onSubmit}) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="bedrooms">Image Url</label>
-                <input
-                    ref={register}
-                    name="image"
-                    type="text"
-                    className="form-control"
-                    id="image" />
+                <label htmlFor="image">Image Url</label>
+                <FileLoader 
+                    onFileUpload={image => setValue('image', image._id)}
+                />
             </div>
 
             <div className="form-group">
