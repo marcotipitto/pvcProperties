@@ -4,15 +4,28 @@ const Schema = mongoose.Schema;
 const rentalSchema = new Schema({
     title: { type: String, required: true, maxlength: [128, 'Invalid length, Maximum is 128 characters']},
     city: { type: String, required: true, lowercase: true},
-    street: { type: String, required: true, lowercase: true, minlength: [4, 'Invalid length, Minimum is 4 characters']},
+    address: { type: String, required: true, lowercase: true, minlength: [4, 'Invalid length, Minimum is 4 characters']},
+    zip: { type: String, required: true, maxlength: [5, 'Zip must be 5 digits'], minlength: [5, 'Zip must be 5 digits']},
     category: { type: String, required: true, lowercase: true},
     image: { type: Schema.Types.ObjectId, ref: 'CloudinaryImage' },
-    numOfRooms: { type: Number, required: true},
     description: { type: String, required: true},
-    dailyPrice: { type: Number, required: true},
-    shared: Boolean,
+    bedrooms: {type: Number, required: true},
+    bathrooms: {type: Number, required: true},
+    price: { type: Number, required: true},
+    parkingSpots: { type: Number, required: true},
+    security: { type: String},
+    laundry: { type: String, required: true},
+    leaseTerm: { type: String, required: true},
+    pets: { type: Boolean, required: true},
+    airCon: { type: Boolean},
+    heating: { type: Boolean},
+    floorNumber: { type: Number, required: true },
+    elevator: { type: Boolean, required: true},
+    dishwasher: { type: Boolean},
+    refrigerator: { type: Boolean},
+    smoking: { type: Boolean, required: true},
     owner: { type: Schema.Types.ObjectId, ref: 'User'},
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now}
 });
 
 
