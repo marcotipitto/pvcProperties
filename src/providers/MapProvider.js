@@ -42,7 +42,7 @@ export const MapProvider = ({ children, apiKey }) => {
             key: apiKey,
             container: 'pvc-map',
             style: 'tomtom://vector/1/basic-main',
-            zoom: 15,
+            zoom: 14,
             scrollZoom: false
         });
 

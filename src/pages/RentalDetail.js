@@ -18,22 +18,22 @@ class RentalDetail extends React.Component {
     }
 
     get location() {
-        const { rental: { street, city } } = this.props;
-        return street && city && city + ', ' + street;
+        const { rental: { address, city, zip } } = this.props;
+        return address && city && zip && address + ', ' + city + ' ' + zip;
     }
 
     render() {
         const { rental, isFetching, isAuth } = this.props;
         if (isFetching || !rental._id) { return null };
         return (
-            <section id="rentalDetails">
+            <section id="rentalDetail">
                 <div className="upper-section">
                     <div className="row">
                         <div className="col-md-6">
                             <img className="rental-img" src={rental.image.url} alt={rental.title} />
                         </div>
                         <div className="col-md-6">
-                            <TomMap location={this.location}/>
+                            <TomMap test={console.log(this.location)} location={this.location}/>
                         </div>
                     </div>
                 </div>
@@ -42,9 +42,6 @@ class RentalDetail extends React.Component {
                     <div className="row">
                         <div className="col-md-8">
                             <RentalInfo rental={rental}/>
-                        </div>
-                        <div className="col-md-4">
-                            <BookingReserve rental={rental} isAuth={isAuth}/>
                         </div>
                     </div>
                 </div>

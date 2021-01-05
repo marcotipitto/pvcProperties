@@ -35,12 +35,6 @@ class RentalNew extends React.Component {
                             </p>
                             </div> */}
                         </div>
-                        <div className="col-md-6 ml-auto">
-                            <div className="image-container">
-                                <h2 className="catchphrase">Hundreds of awesome places in reach of few clicks.</h2>
-                                <img src="/images/create-rental.jpg" alt="" />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

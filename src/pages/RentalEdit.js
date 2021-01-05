@@ -3,16 +3,16 @@ import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchRentalById, verifyRentalOwner, updateRental } from 'actions';
 import TomMap from 'components/map/TomMap';
-import RentalAssets from 'components/rental/RentalAssets';
 import { capitalize } from 'helpers/functions';
 import {
     EditableInput,
     EditableSelect,
     EditableTextArea,
-    EditableImage
+    EditableImage,
+    EditableAssets
 } from 'components/editable';
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const withUserCheck = Component => props => {
     const [guard, setGuard] = useState({ canProceed: false, isChecking: true });
@@ -61,8 +61,8 @@ class RentalEdit extends React.Component {
     }
 
     get location() {
-        const { rental: { street, city } } = this.props;
-        return street && city && city + ', ' + street
+        const { rental: { address, city } } = this.props;
+        return address && city && address + ', ' + city
     }
 
     render() {
@@ -91,27 +91,26 @@ class RentalEdit extends React.Component {
                     <div className="row">
                         <div className="col-md-8">
                             <div className="rental">
-                                <span className="rental-city">Is shared: </span>
-                                <EditableSelect
-                                    entity={rental}
-                                    field={'shared'}
-                                    containerType={"inline"}
-                                    options={[true, false]}
-                                    onUpdate={this.updateRental}
-                                    className={`rental-type type-${rental.category}`}
-                                />
                                 <EditableSelect
                                     entity={rental}
                                     field={'category'}
-                                    options={['apartment', 'condo', 'house']}
+                                    options={['apartment', 'condo', 'house', 'townhouse']}
                                     onUpdate={this.updateRental}
                                     className={`rental-type type-${rental.category}`}
                                 />
+                                <br/>
                                 <EditableInput
                                     entity={rental}
                                     field={'title'}
                                     className={'rental-title'}
                                     onUpdate={this.updateRental}
+                                />
+                                <EditableInput
+                                    entity={rental}
+                                    field={'address'}
+                                    onUpdate={this.updateRental}
+                                    className={'rental-city'}
+                                    transformView={value => capitalize(value)}
                                 />
                                 <EditableInput
                                     entity={rental}
@@ -122,27 +121,64 @@ class RentalEdit extends React.Component {
                                 />
                                 <EditableInput
                                     entity={rental}
-                                    field={'street'}
+                                    field={'zip'}
                                     onUpdate={this.updateRental}
-                                    className={'rental-street'}
+                                    className={'rental-city'}
                                     transformView={value => capitalize(value)}
                                 />
                                 <div className="rental-room-info mb-1">
                                     <span>
-                                        <FontAwesomeIcon icon="building" />
+                                        <FontAwesomeIcon icon="bed" />
                                         <EditableInput
                                             entity={rental}
-                                            field={'numOfRooms'}
+                                            field={'bedrooms'}
                                             onUpdate={this.updateRental}
                                             containerType={"inline"}
                                             className={'mr-0 ml-2'}
                                         /> bedrooms
                                     </span>
                                     <span>
-                                        <FontAwesomeIcon icon="user" /> {rental.numOfRooms + 4} guests
+                                        <FontAwesomeIcon icon="bath" />
+                                        <EditableInput
+                                            entity={rental}
+                                            field={'bathrooms'}
+                                            onUpdate={this.updateRental}
+                                            containerType={"inline"}
+                                            className={'mr-0 ml-2'}
+                                        /> bathrooms
                                     </span>
                                     <span>
-                                        <FontAwesomeIcon icon="bed" /> {rental.numOfRooms + 2} beds
+                                        <FontAwesomeIcon icon="car" />
+                                        <EditableInput
+                                            entity={rental}
+                                            field={'parkingSpots'}
+                                            onUpdate={this.updateRental}
+                                            containerType={"inline"}
+                                            className={'mr-0 ml-2'}
+                                        /> parking spots
+                                    </span>
+                                </div>
+                                <div className="rental-room-info mb-1">
+                                    <span>
+                                        Floor:
+                                        <EditableInput
+                                            entity={rental}
+                                            field={'floorNumber'}
+                                            onUpdate={this.updateRental}
+                                            containerType={"inline"}
+                                            className={'mr-0 ml-2'}
+                                        />
+                                    </span>
+                                    <span>
+                                        Elevator:
+                                        <EditableSelect
+                                            entity={rental}
+                                            field={'elevator'}
+                                            options={['true', 'false']}
+                                            onUpdate={this.updateRental}
+                                            containerType={"inline"}
+                                            className={'mr-0 ml-2'}
+                                        />
                                     </span>
                                 </div>
                                 <EditableTextArea
@@ -153,8 +189,26 @@ class RentalEdit extends React.Component {
                                     rows={5}
                                     cols={60}
                                 />
+                                <h5>
+                                    Price: $ 
+                                    <EditableInput
+                                        entity={rental}
+                                        field={'price'}
+                                        onUpdate={this.updateRental}
+                                        containerType={"inline"}
+                                        className={'mr-0 ml-2'}
+                                    /> per month <br/>
+                                    Term:
+                                    <EditableSelect
+                                        entity={rental}
+                                        field={'leaseTerm'}
+                                        options={['12 Month', 'Month to Month']}
+                                        onUpdate={this.updateRental}
+                                        containerType={"inline"}
+                                    />
+                                </h5>
                                 <hr />
-                                <RentalAssets />
+                                <EditableAssets rental={rental} onUpdate={this.updateRental} />
                             </div>
                         </div>
                     </div>

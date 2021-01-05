@@ -17,6 +17,10 @@
         margin: 0;
       }
 
+      .rental-city {
+        margin-bottom: 2px;
+      }
+
       &-owner {
         float: right;
 
@@ -95,6 +99,10 @@
 
         &condo {
           color: #d68000
+        }
+
+        &townhouse {
+          color: green
         }
       }
     }

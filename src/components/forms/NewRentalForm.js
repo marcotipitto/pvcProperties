@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import FileLoader from 'components/file-upload/FileLoader';
 
-const rentalOptions = ['apartment', 'condo', 'house'];
+const rentalOptions = ['apartment', 'condo', 'house', 'townhouse'];
+const leaseOptions = ['12 month', 'month to month'];
+const laundryOptions = ['communal', 'in unit']
 
 const NewRentalForm = ({onSubmit}) => {
 
@@ -35,13 +37,22 @@ const NewRentalForm = ({onSubmit}) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="street">Street</label>
+                <label htmlFor="street">Address</label>
                 <input
                     ref={register}
-                    name="street"
+                    name="address"
                     type="text"
                     className="form-control"
-                    id="street" />
+                    id="address" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="street">Zip</label>
+                <input
+                    ref={register}
+                    name="zip"
+                    type="text"
+                    className="form-control"
+                    id="zip" />
             </div>
 
             <div className="form-group">
@@ -65,15 +76,32 @@ const NewRentalForm = ({onSubmit}) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="bedrooms">Rooms</label>
+                <label htmlFor="bedrooms">Bedrooms</label>
                 <input
                     ref={register}
-                    name="numOfRooms"
+                    name="bedrooms"
                     type="number"
                     className="form-control"
-                    id="numOfRooms" />
+                    id="bedrooms" />
             </div>
-
+            <div className="form-group">
+                <label htmlFor="bathrooms">Bathrooms</label>
+                <input
+                    ref={register}
+                    name="bathrooms"
+                    type="number"
+                    className="form-control"
+                    id="bathrooms" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="parkingSpots">Parking Spots</label>
+                <input
+                    ref={register}
+                    name="parkingSpots"
+                    type="number"
+                    className="form-control"
+                    id="parkingSpots" />
+            </div>
             <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
@@ -87,28 +115,113 @@ const NewRentalForm = ({onSubmit}) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="dailyRate">Daily Price</label>
+                <label htmlFor="price">Price</label>
                 <div className="input-group">
                     <div className="input-group-prepend">
                         <div className="input-group-text">$</div>
                     </div>
                     <input
                         ref={register}
-                        name="dailyPrice"
+                        name="price"
                         type="number"
                         className="form-control"
-                        id="dailyPrice" />
+                        id="price" />
                 </div>
+            </div>
+            <div className="form-group">
+                <label htmlFor="leaseTerm">Lease Term</label>
+                <select className="form-control"
+                    ref={register}
+                    name="leaseTerm"
+                    id="leaseTerm">
+                    { leaseOptions.map(option => 
+                        <option key={option}>{option}</option>
+                    )}
+                </select>
             </div>
 
             <div className="form-group">
-                <label htmlFor="shared">Shared</label>
+                <label htmlFor="floorNumber">Floor Number</label>
                 <input
                     ref={register}
-                    name="shared"
+                    name="floorNumber"
+                    type="number"
+                    className="form-control"
+                    id="floorNumber" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="elevator">Elevator</label>
+                <input
+                    ref={register}
+                    name="elevator"
                     type="checkbox"
                     className="form-control"
-                    id="shared" />
+                    id="elevator" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="heating">Heating</label>
+                <input
+                    ref={register}
+                    name="heating"
+                    type="checkbox"
+                    className="form-control"
+                    id="heating" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="airCon">Air Conditioning</label>
+                <input
+                    ref={register}
+                    name="airCon"
+                    type="checkbox"
+                    className="form-control"
+                    id="airCon" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="dishwasher">Dishwashwer</label>
+                <input
+                    ref={register}
+                    name="dishwasher"
+                    type="checkbox"
+                    className="form-control"
+                    id="dishwasher" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="refrigerator">Refrigerator</label>
+                <input
+                    ref={register}
+                    name="refrigerator"
+                    type="checkbox"
+                    className="form-control"
+                    id="refrigerator" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="laundry">Washer/Dryer</label>
+                <select className="form-control"
+                    ref={register}
+                    name="laundry"
+                    id="laundry">
+                    { laundryOptions.map(option => 
+                        <option key={option}>{option}</option>
+                    )}
+                </select>
+            </div>
+            <div className="form-group">
+                <label htmlFor="smoking">Smoking</label>
+                <input
+                    ref={register}
+                    name="smoking"
+                    type="checkbox"
+                    className="form-control"
+                    id="smoking" />
+            </div>
+            <div className="form-group">
+                <label htmlFor="pets">Pets</label>
+                <input
+                    ref={register}
+                    name="pets"
+                    type="checkbox"
+                    className="form-control"
+                    id="pets" />
             </div>
             <button
                 type="submit"
