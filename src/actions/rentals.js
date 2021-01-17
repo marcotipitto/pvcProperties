@@ -21,7 +21,7 @@ export const fetchRentals = (location) => dispatch => {
 
 export const fetchUserRentals = () => dispatch => {
     dispatch({ type: 'REQUEST_DATA', resource: 'manage-rentals' });
-    return pvcAxios.get('/rentals/me')
+    return pvcAxios.get('/rentals')
         .then(res => res.data)
         .then(rentals => {
             dispatch({

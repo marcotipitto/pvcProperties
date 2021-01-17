@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import FileLoader from 'components/file-upload/FileLoader';
+import FormError from './FormError';
+import { capitalize } from '../../helpers/functions';
 
 const rentalOptions = ['apartment', 'condo', 'house', 'townhouse'];
 const leaseOptions = ['12 month', 'month to month'];
@@ -8,7 +10,7 @@ const laundryOptions = ['communal', 'in unit']
 
 const NewRentalForm = ({onSubmit}) => {
 
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, setValue, errors } = useForm();
 
     useEffect(() => {
         register({name: 'image'});
@@ -19,53 +21,68 @@ const NewRentalForm = ({onSubmit}) => {
             <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Title is required", maxLength: {value: 128, message: "Title cannot exceed 128 characters"}})}
                     name="title"
                     type="text"
                     className="form-control"
                     id="title" />
+                <FormError errors={errors} name="title">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
                 <label htmlFor="city">City</label>
                 <input
-                    ref={register}
+                    ref={register({required: "City is required"})}
                     name="city"
                     type="text"
                     className="form-control"
                     id="city" />
+                <FormError errors={errors} name="city">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
-                <label htmlFor="street">Address</label>
+                <label htmlFor="address">Address</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Address is required", minLength: {value: 4, message: "Address must be at least 4 characters long"}})}
                     name="address"
                     type="text"
                     className="form-control"
                     id="address" />
+                <FormError errors={errors} name="address">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
-                <label htmlFor="street">Zip</label>
+                <label htmlFor="zip">Zip Code</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Zip Code is required", minLength: {value: 5, message: "Zip code must be 5 characters long"}, maxLength: {value: 5, message: "Zip code must be 5 characters long"}})}
                     name="zip"
                     type="text"
                     className="form-control"
                     id="zip" />
+                <FormError errors={errors} name="zip">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
                 <label htmlFor="category">Category</label>
 
                 <select className="form-control"
-                    ref={register}
+                    ref={register({required: "Category is required"})}
                     name="category"
                     id="category">
                     { rentalOptions.map(option => 
                         <option key={option}>{option}</option>
                     )}
                 </select>
+                <FormError errors={errors} name="category">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
@@ -78,40 +95,52 @@ const NewRentalForm = ({onSubmit}) => {
             <div className="form-group">
                 <label htmlFor="bedrooms">Bedrooms</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Bedrooms is required", min: {value: 0, message: "Bedrooms cannot be negative"}})}
                     name="bedrooms"
                     type="number"
                     className="form-control"
                     id="bedrooms" />
+                <FormError errors={errors} name="bedrooms">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
                 <label htmlFor="bathrooms">Bathrooms</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Bathrooms is required", min: {value: 0, message: "Bathrooms cannot be negative"}})}
                     name="bathrooms"
                     type="number"
                     className="form-control"
                     id="bathrooms" />
+                <FormError errors={errors} name="bathrooms">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
                 <label htmlFor="parkingSpots">Parking Spots</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Parking Spots is required", min: {value: 0, message: "Parking spots cannot be negative"}})}
                     name="parkingSpots"
                     type="number"
                     className="form-control"
                     id="parkingSpots" />
+                <FormError errors={errors} name="parkingSpots">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
-                    ref={register}
+                    ref={register({required: "Description is required"})}
                     name="description"
                     rows="5"
                     type="text"
                     className="form-control"
                     id="description">
                 </textarea>
+                <FormError errors={errors} name="description">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
@@ -121,33 +150,43 @@ const NewRentalForm = ({onSubmit}) => {
                         <div className="input-group-text">$</div>
                     </div>
                     <input
-                        ref={register}
+                        ref={register({required: "Price is required", min: {value: 0, message: "Price cannot be negative"}})}
                         name="price"
                         type="number"
                         className="form-control"
                         id="price" />
+                    <br/>
+                    <FormError errors={errors} name="price">
+                        {(message) => <p>{message}</p>}
+                    </FormError>
                 </div>
             </div>
             <div className="form-group">
                 <label htmlFor="leaseTerm">Lease Term</label>
                 <select className="form-control"
-                    ref={register}
+                    ref={register({required: "Lease Term is required"})}
                     name="leaseTerm"
                     id="leaseTerm">
                     { leaseOptions.map(option => 
                         <option key={option}>{option}</option>
                     )}
                 </select>
+                <FormError errors={errors} name="leaseTerm">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
                 <label htmlFor="floorNumber">Floor Number</label>
                 <input
-                    ref={register}
+                    ref={register({required: "Floor Number is required"})}
                     name="floorNumber"
                     type="number"
                     className="form-control"
                     id="floorNumber" />
+                <FormError errors={errors} name="floorNumber">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
                 <label htmlFor="elevator">Elevator</label>
@@ -197,13 +236,16 @@ const NewRentalForm = ({onSubmit}) => {
             <div className="form-group">
                 <label htmlFor="laundry">Washer/Dryer</label>
                 <select className="form-control"
-                    ref={register}
+                    ref={register({required: "Washer/Dryer is required"})}
                     name="laundry"
                     id="laundry">
                     { laundryOptions.map(option => 
-                        <option key={option}>{option}</option>
+                        <option key={option}>{capitalize(option)}</option>
                     )}
                 </select>
+                <FormError errors={errors} name="laundry">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
             <div className="form-group">
                 <label htmlFor="smoking">Smoking</label>

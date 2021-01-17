@@ -46,7 +46,7 @@ class ManageRentals extends React.Component {
             <div className="card-list">
                 <h1 className="page-title">My Rentals</h1>
                 <ApiErrors errors={errors} />
-                <div className="row">
+                <div className="row" >
                     {this.renderRentals(rentals)}
                 </div>
                 { !isFetching && rentals.length === 0 &&
