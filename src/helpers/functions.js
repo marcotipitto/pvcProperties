@@ -14,7 +14,34 @@ export const formatDate = (date, dateFormat = 'YYYY/MM/DD') => {
 }
 
 export const blobToFile = (blob) => {
+    console.log(blob)
     return new File([blob], blob.name, { type: blob.type });
+}
+
+export const fileToBase64 = image => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    ctx.drawImage(
+        image,
+        scaleX,
+        scaleY
+    );
+
+    return new Promise((resolve, reject) => {
+        canvas.toDataURL(blob => {
+            if (!blob) {
+                //reject(new Error('Canvas is empty'));
+                reject('Canvas is empty');
+                return;
+            }
+            blob.name = image.fileName;
+            const fileUrl = window.URL.createObjectURL(blob);
+            blob.url = fileUrl;
+            resolve(blob);
+        }, 'image/jpeg', 1);
+    });
 }
 
 export const getCroppedImg = (image, crop, fileName) => {

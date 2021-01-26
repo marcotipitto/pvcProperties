@@ -3,7 +3,7 @@ import './FileLoader.scss';
 import { uploadImage } from 'actions';
 import { blobToFile, getCroppedImg } from 'helpers/functions';
 import Spinner from 'components/shared/Spinner';
-import ImageCrop from './ImageCrop';
+// import ImageCrop from './ImageCrop';
 
 class ImageSnippet {
     constructor(src, name, type) {
@@ -21,7 +21,7 @@ class FileLoader extends React.Component {
         this.fileReader = new FileReader();
         this.originalImage = null;
         this.state = {
-            selectedImg: null,
+            selectedImgs: null,
             imgStatus: 'INIT',
             croppedImg: null,
         }
@@ -29,24 +29,27 @@ class FileLoader extends React.Component {
 
     handleImageLoad = image => this.originalImage = image
 
-    handleCropComplete = async crop => {
-        if (!this.originalImage) { return; }
-        const { selectedImg } = this.state;
-        const croppedImg = await getCroppedImg(this.originalImage, crop, selectedImg.name);
-        this.setState({ croppedImg });
-    }
+    // handleCropComplete = async crop => {
+    //     if (!this.originalImage) { return; }
+    //     const { selectedImg } = this.state;
+    //     const croppedImg = await getCroppedImg(this.originalImage, crop, selectedImg.name);
+    //     this.setState({ croppedImg });
+    // }
 
     removeFileLoadListener = () => {
         this.fileReader.removeEventListener('load', this.handleImageLoad);
     }
 
     handleImageUpload = () => {
-        const { croppedImg } = this.state;
+        debugger;
+        const { selectedImgs } = this.state;
         this.changeImageStatus('PENDING');
-        const imageToUpload = blobToFile(croppedImg);
-        uploadImage(imageToUpload)
-            .then(uploadedImage => {
-                this.props.onFileUpload(uploadedImage);
+        const imagesToUpload = [];
+        selectedImgs.forEach(selectedImg => imagesToUpload.push(selectedImg))
+        // imagesToUpload[0] = blobToFile(selectedImgs[0])
+        uploadImage(imagesToUpload)
+            .then(uploadedImages => {
+                this.props.onFileUpload(uploadedImages);
                 this.changeImageStatus('UPLOADED');
             })
             .catch(() => {
@@ -55,24 +58,54 @@ class FileLoader extends React.Component {
     }
 
     handleChange = event => {
-        const file = event.target.files[0];
-        this.fileReader.onloadend = (event) => {
-            const selectedImg = new ImageSnippet(event.target.result, file.name, file.type);
-            this.setState({ selectedImg, imgStatus: 'LOADED' });
+        const files = event.target.files;
+        const selectedImgs = [];
+        // this.fileReader.onloadend = (event) => {
+        //     const selectedImgs = [];
+        //     files.forEach(file => {
+        //         selectedImgs.push(new ImageSnippet(event.target.result, file.name, file.type));
+        //     });
+
+        //     this.setState({ selectedImgs, imgStatus: 'LOADED' });
+        // }
+        // files.forEach((file) => this.fileReader.readAsDataURL(file));
+        // files.map(file => file => {
+        //     this.fileReader.readAsDataURL(file)
+        // }) 
+
+        // const file = event.target.files[0];
+        // this.fileReader.onloadend = (event) => {
+        //     const selectedImg = new ImageSnippet(event.target.result, file.name, file.type);
+        //     this.setState({ selectedImg, imgStatus: 'LOADED' });
+        // }
+        // this.fileReader.readAsDataURL(file);
+
+        for (let i = 0; i < files.length; i++) {
+            let self = this;
+            (function (file) { 
+                const reader = new FileReader();
+                reader.onloadend = (event) => {
+                    debugger;
+                    selectedImgs.push(new ImageSnippet(event.target.result, file.name, file.type));
+                    if (selectedImgs.length === files.length) {
+                        self.setState({ selectedImgs, imgStatus: 'LOADED' });
+                    }
+                }
+                reader.readAsDataURL(file);
+            })(files[i])
         }
-        this.fileReader.readAsDataURL(file);
     }
 
     cancelImage = () => {
         this.inputRef.current.value = null;
         this.originalImage = null;
-        this.setState({ selectedImg: null, croppedBase64: null, imgStatus: 'INIT' });
+        this.setState({ selectedImgs: [], croppedBase64: null, imgStatus: 'INIT' });
     }
 
     changeImageStatus = imgStatus => this.setState({ imgStatus })
 
     render() {
-        const { selectedImg, imgStatus, croppedImg } = this.state;
+        const { selectedImgs, imgStatus, croppedImg } = this.state;
         return (
             <div className="img-upload-container mb-2">
                 <label className="img-upload btn btn-pvc-main">
@@ -83,20 +116,23 @@ class FileLoader extends React.Component {
                         accept=".jpg, .png, .jpeg, .heic, .heif"
                         className="fileInput"
                         type="file"
+                        multiple="multiple"
                     />
                 </label>
-                { selectedImg &&
+                {/* { selectedImgs &&
                     <ImageCrop
                         src={selectedImg.src}
                         onCropComplete={this.handleCropComplete}
                         onImageLoaded={this.handleImageLoad}
                     />
-                }
-                { selectedImg &&
+                } */}
+                { selectedImgs && selectedImgs.length > 0 &&
                     <>
                         <div className="img-preview-container mb-2">
                             <div className="img-preview">
-                                <img src={(croppedImg && croppedImg.url) || selectedImg.src} alt=""></img>
+                                {selectedImgs.map(selectedImg =>
+                                    <img src={selectedImg.src} alt="" key={selectedImg.name}></img>
+                                )}
                             </div>
                             {imgStatus === 'PENDING' &&
                                 <div className="spinner-container upload-status">

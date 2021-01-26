@@ -7,7 +7,7 @@ const rentalSchema = new Schema({
     address: { type: String, required: true, lowercase: true, minlength: [4, 'Invalid length, Minimum is 4 characters']},
     zip: { type: String, required: true, maxlength: [5, 'Zip must be 5 digits'], minlength: [5, 'Zip must be 5 digits']},
     category: { type: String, required: true, lowercase: true},
-    image: { type: Schema.Types.ObjectId, ref: 'CloudinaryImage' },
+    image: [{ type: Schema.Types.ObjectId, ref: 'CloudinaryImage' }],
     description: { type: String, required: true},
     bedrooms: {type: Number, required: true, min: 0},
     bathrooms: {type: Number, required: true, min: 0},
