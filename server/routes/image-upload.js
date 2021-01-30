@@ -22,13 +22,15 @@ const multipleUploadCtrl = (req, res, next) => {
 
 router.post('', onlyAuthUser, multipleUploadCtrl, async (req, res) => {
     try {
-        if (!req.files || req.files.length === 0) { throw new Error('Images are not present'); }
-        const files = req.files;
+        console.log(req)
+        if (!req.body.files || req.body.files.length === 0) { throw new Error('Images are not present'); }
+        const files = req.body.files;
         const savedImages = [];
         for (const file of files) {
-            const file64 = dataUri(file);
-            console.log(file64, file)
-            const result = await cloudUpload(file64.content);
+            // const file64 = dataUri(file);
+            // console.log(file64, file)
+            // const result = await cloudUpload(file64.content);
+            const result = await cloudUpload(file);
             const cImage = new CloudinaryImage({
                 url: result.secure_url,
                 cloudinaryId: result.public_id

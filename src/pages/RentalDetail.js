@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchRentalById } from 'actions';
 import RentalInfo from 'components/rental/RentalInfo';
 import TomMap from 'components/map/TomMap';
-import BookingReserve from 'components/booking/BookingReserve';
+import RentalCarousel from 'components/rental/RentalCarousel';
 
 class RentalDetail extends React.Component {
 
@@ -29,19 +29,17 @@ class RentalDetail extends React.Component {
             <section id="rentalDetail">
                 <div className="upper-section">
                     <div className="row">
-                        <div className="col-md-6">
-                            <img className="rental-img" src={rental.image.url} alt={rental.title} />
-                        </div>
-                        <div className="col-md-6">
-                            <TomMap test={console.log(this.location)} location={this.location}/>
-                        </div>
+                        <RentalCarousel images={rental.image} location={this.location}/>
                     </div>
                 </div>
 
                 <div className="details-section">
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-6">
                             <RentalInfo rental={rental}/>
+                        </div>
+                        <div className="col-md-6">
+                            <TomMap location={this.location}/>
                         </div>
                     </div>
                 </div>

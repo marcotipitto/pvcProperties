@@ -45,10 +45,8 @@ export const fetchRentalById = rentalId => async dispatch => {
 export const uploadImage = images => {
     const formData = new FormData();
     for (let i = 0; i < images.length; i++) {
-        formData.append(`image`, images[i])
+        formData.append('files', images[i].src)
     }
-    // formData.append('image', JSON.stringify(image));
-    console.log(formData)
     return pvcAxios.post('/image-upload', formData)
         .then(res => res.data)
 }

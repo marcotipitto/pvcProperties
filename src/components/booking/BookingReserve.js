@@ -30,7 +30,6 @@ class BookingReserve extends React.Component {
     async componentDidMount() {
         const { rental } = this.props;
         this.bookedOutDates = await getBookings(rental._id);
-        console.log(this.bookedOutDates)
     }
 
     handleApply = (_, {startDate, endDate}) => {

@@ -14,7 +14,6 @@ export const formatDate = (date, dateFormat = 'YYYY/MM/DD') => {
 }
 
 export const blobToFile = (blob) => {
-    console.log(blob)
     return new File([blob], blob.name, { type: blob.type });
 }
 

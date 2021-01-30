@@ -41,7 +41,6 @@ class FileLoader extends React.Component {
     }
 
     handleImageUpload = () => {
-        debugger;
         const { selectedImgs } = this.state;
         this.changeImageStatus('PENDING');
         const imagesToUpload = [];
@@ -85,7 +84,6 @@ class FileLoader extends React.Component {
             (function (file) { 
                 const reader = new FileReader();
                 reader.onloadend = (event) => {
-                    debugger;
                     selectedImgs.push(new ImageSnippet(event.target.result, file.name, file.type));
                     if (selectedImgs.length === files.length) {
                         self.setState({ selectedImgs, imgStatus: 'LOADED' });
@@ -113,7 +111,7 @@ class FileLoader extends React.Component {
                     <input
                         ref={this.inputRef}
                         onChange={this.handleChange}
-                        accept=".jpg, .png, .jpeg, .heic, .heif"
+                        accept=".jpg, .png, .jpeg"
                         className="fileInput"
                         type="file"
                         multiple="multiple"

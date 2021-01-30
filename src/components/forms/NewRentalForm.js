@@ -88,7 +88,9 @@ const NewRentalForm = ({onSubmit}) => {
             <div className="form-group">
                 <label htmlFor="image">Image Url</label>
                 <FileLoader 
-                    onFileUpload={image => setValue('image', image._id)}
+                    onFileUpload={images => {
+                        setValue('image', images.map(image => image._id))}
+                    }
                 />
             </div>
 

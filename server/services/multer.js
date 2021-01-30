@@ -5,6 +5,7 @@ const ALLOWED_FORMAT = ['image/jpeg', 'image/png', 'image/jpg', 'image/heif', 'i
 const storage = multer.memoryStorage();
 const upload = multer({
     storage,
+    limits: { fieldSize: 25 * 1024 * 1024 },
     fileFilter: function (req, file, cb) {
         if (ALLOWED_FORMAT.includes(file.mimetype)) {
             cb(null, true);
