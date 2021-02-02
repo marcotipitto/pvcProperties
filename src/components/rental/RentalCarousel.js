@@ -1,7 +1,7 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
 
-export const RentalCarousel = ({images}) => {
+const RentalCarousel = ({images}) => {
     return (
         <Carousel className="carousel">
             {images.map(image => 

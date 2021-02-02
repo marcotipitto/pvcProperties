@@ -4,7 +4,7 @@ import { capitalize } from '../../helpers/functions';
 
 const RentalAssets = ({rental}) =>
     <div className="rental-assets">
-        <h3 className="title">Assets</h3>
+        <h3 className="title">Features</h3>
         <div className="row">
             <div className="col-md-6">
                 {rental.airCon && 
