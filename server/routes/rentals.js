@@ -5,8 +5,7 @@ const {
     getRentals, 
     getUserRentals,
     getRentalById, 
-    createRental, 
-    verifyUser,
+    createRental,
     updateRental, 
     deleteRental
 } = require('../controllers/rentals');
@@ -18,8 +17,6 @@ router.get('/:id', getRentalById);
 router.get('/me', onlyAuthUser, getUserRentals)
 
 router.post('', onlyAuthUser, createRental);
-
-router.get('/:rentalId/verify-user', onlyAuthUser, verifyUser);
 
 router.patch('/:rentalId', onlyAuthUser, updateRental);
 

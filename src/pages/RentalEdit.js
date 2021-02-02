@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchRentalById, verifyRentalOwner, updateRental } from 'actions';
+import { fetchRentalById, updateRental } from 'actions';
 import TomMap from 'components/map/TomMap';
 import { capitalize } from 'helpers/functions';
 import {
@@ -13,26 +13,6 @@ import {
 } from 'components/editable';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const withUserCheck = Component => props => {
-    const [guard, setGuard] = useState({ canProceed: false, isChecking: true });
-    const { id } = props.match.params;
-
-    useEffect(() => {
-        verifyRentalOwner(id)
-            .then(_ => setGuard({ canProceed: true, isChecking: false }))
-            .catch(_ => setGuard({ canProceed: false, isChecking: false }))
-    }, [id])
-
-    const { canProceed, isChecking } = guard;
-    if (!isChecking && canProceed) {
-        return <Component {...props} />
-    } else if (!isChecking && !canProceed) {
-        return <Redirect to={{ pathname: '/' }} />
-    } else {
-        return <h1>Loading...</h1>
-    }
-}
 
 class RentalEdit extends React.Component {
 
@@ -78,7 +58,7 @@ class RentalEdit extends React.Component {
                                 field={'image'}
                                 containerType={"block"}
                                 className="rental-img mb-2"
-                                transformView={image => image.url}
+                                transformView={image => image[0].url}
                                 onUpdate={this.updateRental}
                             />
                         </div>
@@ -221,5 +201,5 @@ class RentalEdit extends React.Component {
 const mapStateToProps = ({ rental, auth: { isAuth } }) =>
     ({ rental: rental.item, isFetching: rental.isFetching, isAuth: isAuth })
 
-const RentalEditWithRouterAndCheck = withRouter(withUserCheck(RentalEdit));
+const RentalEditWithRouterAndCheck = withRouter(RentalEdit);
 export default connect(mapStateToProps)(RentalEditWithRouterAndCheck); 

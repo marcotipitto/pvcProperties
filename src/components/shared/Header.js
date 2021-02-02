@@ -26,16 +26,8 @@ const Header = ({username, isAuth, signOut}) => {
                     </li>
                     {isAuth &&
                         <>
-                            <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Manage
-                                </Link>
-                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link className="dropdown-item" to="/rentals/new">New Rental</Link>
-                                    <Link className="dropdown-item" to="/rentals/manage">Manage Rentals</Link>
-                                    <Link className="dropdown-item" to="/bookings/manage">Manage Bookings</Link>
-                                    <Link className="dropdown-item" to="/bookings/recieved">Recieved Bookings</Link>
-                                </div>
+                            <li className="nav-item active">
+                                <Link className="nav-link" to="/rentals/manage">Manage</Link>
                             </li>
                             <li className="nav-item">
                                 <div 

@@ -44,24 +44,6 @@ exports.createRental = (req, res) => {
     })
 }
 
-exports.verifyUser = async (req, res) => {
-    const { user } = res.locals;
-    const { rentalId } = req.params;
-    try {
-        const rental = await Rental.findById(rentalId).populate('owner');
-        if (rental.owner.id !== user.id) {
-            return res.sendApiError(
-                {
-                    title: 'Invalid User',
-                    detail: 'You are not owner of this rental!'
-                });
-        };
-        return res.json({ status: 'verified' });
-    } catch (error) {
-        return res.mongoError(error);
-    };
-};
-
 exports.updateRental = async (req, res) => {
     const { rentalId } = req.params;
     const { user } = res.locals;

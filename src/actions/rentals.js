@@ -2,10 +2,6 @@ import axiosService from 'services/AxiosService';
 import { extractApiErrors } from './index';
 const { pvcAxios } = axiosService;
 
-export const verifyRentalOwner = (rentalId) => {
-    return pvcAxios.get(`/rentals/${rentalId}/verify-user`);
-}
-
 export const fetchRentals = (location) => dispatch => {
     dispatch({ type: 'REQUEST_DATA', resource: 'rentals' });
     const query = location ? `/rentals?city=${location}` : '/rentals';

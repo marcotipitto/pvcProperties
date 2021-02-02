@@ -3,6 +3,7 @@ import EditableComponent from './EditableComponent';
 import FileLoader from 'components/file-upload/FileLoader';
 
 const ImageView = ({ value, ...rest }) => {
+    console.log(value)
     return <img {...rest} src={value} alt=""></img>
 }
 

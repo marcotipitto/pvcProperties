@@ -1,9 +1,7 @@
 import React from 'react';
 import './FileLoader.scss';
 import { uploadImage } from 'actions';
-import { blobToFile, getCroppedImg } from 'helpers/functions';
 import Spinner from 'components/shared/Spinner';
-// import ImageCrop from './ImageCrop';
 
 class ImageSnippet {
     constructor(src, name, type) {
@@ -29,13 +27,6 @@ class FileLoader extends React.Component {
 
     handleImageLoad = image => this.originalImage = image
 
-    // handleCropComplete = async crop => {
-    //     if (!this.originalImage) { return; }
-    //     const { selectedImg } = this.state;
-    //     const croppedImg = await getCroppedImg(this.originalImage, crop, selectedImg.name);
-    //     this.setState({ croppedImg });
-    // }
-
     removeFileLoadListener = () => {
         this.fileReader.removeEventListener('load', this.handleImageLoad);
     }
@@ -59,26 +50,6 @@ class FileLoader extends React.Component {
     handleChange = event => {
         const files = event.target.files;
         const selectedImgs = [];
-        // this.fileReader.onloadend = (event) => {
-        //     const selectedImgs = [];
-        //     files.forEach(file => {
-        //         selectedImgs.push(new ImageSnippet(event.target.result, file.name, file.type));
-        //     });
-
-        //     this.setState({ selectedImgs, imgStatus: 'LOADED' });
-        // }
-        // files.forEach((file) => this.fileReader.readAsDataURL(file));
-        // files.map(file => file => {
-        //     this.fileReader.readAsDataURL(file)
-        // }) 
-
-        // const file = event.target.files[0];
-        // this.fileReader.onloadend = (event) => {
-        //     const selectedImg = new ImageSnippet(event.target.result, file.name, file.type);
-        //     this.setState({ selectedImg, imgStatus: 'LOADED' });
-        // }
-        // this.fileReader.readAsDataURL(file);
-
         for (let i = 0; i < files.length; i++) {
             let self = this;
             (function (file) { 
@@ -103,7 +74,7 @@ class FileLoader extends React.Component {
     changeImageStatus = imgStatus => this.setState({ imgStatus })
 
     render() {
-        const { selectedImgs, imgStatus, croppedImg } = this.state;
+        const { selectedImgs, imgStatus } = this.state;
         return (
             <div className="img-upload-container mb-2">
                 <label className="img-upload btn btn-pvc-main">
@@ -117,13 +88,6 @@ class FileLoader extends React.Component {
                         multiple="multiple"
                     />
                 </label>
-                {/* { selectedImgs &&
-                    <ImageCrop
-                        src={selectedImg.src}
-                        onCropComplete={this.handleCropComplete}
-                        onImageLoaded={this.handleImageLoad}
-                    />
-                } */}
                 { selectedImgs && selectedImgs.length > 0 &&
                     <>
                         <div className="img-preview-container mb-2">
