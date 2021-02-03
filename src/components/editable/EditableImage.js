@@ -16,8 +16,11 @@ export class EditableImage extends React.Component {
             <EditableComponent
                 {...this.props}
                 viewComponent={ImageView}
+                className="editable-image"
                 renderComponent={(value, onChange, onKeyDown) =>
-                    <FileLoader onFileUpload={image => onChange(createEvent(image))}/>
+                    <FileLoader onFileUpload={images => {
+                        console.log(images)
+                        onChange(createEvent(images.map(image => image._id)))}}/>
                 }
             />
         )

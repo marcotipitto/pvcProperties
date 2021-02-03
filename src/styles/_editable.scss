@@ -10,6 +10,11 @@
         &-block {
             display: block;
         }
+
+        .editable-image {
+            max-height: 360px;
+            width: auto;
+        }
     
         .editable-item {
             margin-bottom: 0 !important;

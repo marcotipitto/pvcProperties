@@ -52,7 +52,7 @@ class RentalEdit extends React.Component {
             <section id="rentalEdit">
                 <div className="upper-section">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-6 img">
                             <EditableImage
                                 entity={rental}
                                 field={'image'}
