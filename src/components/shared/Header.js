@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RentalSearchInput from 'components/rental/RentalSearchInput';
 
-const Header = ({username, isAuth, signOut}) => {
+const Header = ({ username, isAuth, signOut }) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">PVC Properties</Link>
@@ -16,7 +16,7 @@ const Header = ({username, isAuth, signOut}) => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <RentalSearchInput />
                 <ul className="navbar-nav ml-auto">
-                    {isAuth && 
+                    {isAuth &&
                         <li className="nav-item active">
                             <div className="nav-link">Welcome {username}</div>
                         </li>
@@ -26,8 +26,14 @@ const Header = ({username, isAuth, signOut}) => {
                     </li>
                     {isAuth &&
                         <>
-                            <li className="nav-item active">
-                                <Link className="nav-link" to="/rentals/manage">Manage</Link>
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage
+                                </Link>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <Link className="dropdown-item" to="/rentals/new">New Rental</Link>
+                                    <Link className="dropdown-item" to="/rentals/manage">Manage Rentals</Link>
+                                </div>
                             </li>
                             <li className="nav-item">
                                 <div 
@@ -50,14 +56,14 @@ const Header = ({username, isAuth, signOut}) => {
                             </li>
                         </>
                     }
- 
+
                 </ul>
             </div>
         </nav>
     )
 }
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({ auth }) => {
     return {
         username: auth.username,
         isAuth: auth.isAuth
